@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abdoul Salam — Développeur & Créateur de Solutions Digitales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --card: #16161f;
+    --border: rgba(255,255,255,0.07);
+    --accent1: #6c63ff;
+    --accent2: #ff6b6b;
+    --accent3: #43e97b;
+    --accent4: #f7971e;
+    --text: #f0f0f8;
+    --muted: #7a7a9a;
+    --gradient1: linear-gradient(135deg, #6c63ff, #ff6b6b);
+    --gradient2: linear-gradient(135deg, #43e97b, #38f9d7);
+    --gradient3: linear-gradient(135deg, #f7971e, #ffd200);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(20px);
+    background: rgba(10,10,15,0.8);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Corbel', 'Candara', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    background: var(--gradient1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .orb1 { width: 600px; height: 600px; background: var(--accent1); top: -200px; right: -100px; }
+  .orb2 { width: 400px; height: 400px; background: var(--accent2); bottom: -100px; left: -100px; animation-delay: -3s; }
+  .orb3 { width: 300px; height: 300px; background: var(--accent3); top: 40%; left: 40%; animation-delay: -5s; }
+
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -20px) scale(1.05); }
+    66% { transform: translate(-20px, 30px) scale(0.95); }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(108,99,255,0.15);
+    border: 1px solid rgba(108,99,255,0.3);
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    color: #a89fff;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent3);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-family: 'Corbel', 'Candara', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s ease 0.1s both;
+  }
+
+  .hero h1 .highlight {
+    background: var(--gradient1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero h1 .highlight2 {
+    background: var(--gradient2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-desc {
+    font-size: 1.2rem;
+    color: var(--muted);
+    max-width: 600px;
+    margin-bottom: 3rem;
+    font-weight: 300;
+    line-height: 1.7;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--gradient1);
+    color: white;
+    padding: 0.9rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(108,99,255,0.3);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(108,99,255,0.4);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    color: var(--text);
+    padding: 0.9rem 2rem;
+    border-radius: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 0.95rem;
+    border: 1px solid var(--border);
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.15);
+  }
+
+  /* STATS */
+  .stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.8s ease 0.4s both;
+    flex-wrap: wrap;
+  }
+
+  .stat-item { }
+
+  .stat-number {
+    font-family: 'Corbel', 'Candara', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    background: var(--gradient1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION */
+  section {
+    padding: 6rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent1);
+    margin-bottom: 1rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 2px;
+    background: var(--accent1);
+  }
+
+  .section-title {
+    font-family: 'Corbel', 'Candara', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    font-size: 1.1rem;
+    max-width: 500px;
+    margin-bottom: 3rem;
+  }
+
+  /* PROJECTS GRID */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    text-decoration: none;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-radius: 20px;
+  }
+
+  .project-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .project-card.purple::before { background: radial-gradient(ellipse at top left, rgba(108,99,255,0.1), transparent 60%); }
+  .project-card.red::before { background: radial-gradient(ellipse at top left, rgba(255,107,107,0.1), transparent 60%); }
+  .project-card.green::before { background: radial-gradient(ellipse at top left, rgba(67,233,123,0.1), transparent 60%); }
+  .project-card.orange::before { background: radial-gradient(ellipse at top left, rgba(247,151,30,0.1), transparent 60%); }
+  .project-card.blue::before { background: radial-gradient(ellipse at top left, rgba(56,249,215,0.1), transparent 60%); }
+
+  .project-card:hover::before { opacity: 1; }
+  .project-card:hover.purple { border-color: rgba(108,99,255,0.3); }
+  .project-card:hover.red { border-color: rgba(255,107,107,0.3); }
+  .project-card:hover.green { border-color: rgba(67,233,123,0.3); }
+  .project-card:hover.orange { border-color: rgba(247,151,30,0.3); }
+  .project-card:hover.blue { border-color: rgba(56,249,215,0.3); }
+
+  .project-icon {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .project-icon.purple { background: rgba(108,99,255,0.15); }
+  .project-icon.red { background: rgba(255,107,107,0.15); }
+  .project-icon.green { background: rgba(67,233,123,0.15); }
+  .project-icon.orange { background: rgba(247,151,30,0.15); }
+  .project-icon.blue { background: rgba(56,249,215,0.15); }
+
+  .project-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.7rem;
+    border-radius: 100px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .project-tag.purple { background: rgba(108,99,255,0.15); color: #a89fff; }
+  .project-tag.red { background: rgba(255,107,107,0.15); color: #ff9999; }
+  .project-tag.green { background: rgba(67,233,123,0.15); color: #7fffc4; }
+  .project-tag.orange { background: rgba(247,151,30,0.15); color: #ffd580; }
+  .project-tag.blue { background: rgba(56,249,215,0.15); color: #80fff0; }
+
+  .project-title {
+    font-family: 'Corbel', 'Candara', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+  }
+
+  .project-desc {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    flex: 1;
+    position: relative;
+    z-index: 1;
+  }
+
+  .project-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+    margin-top: 0.5rem;
+  }
+
+  .project-techs {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .tech-pill {
+    font-size: 0.7rem;
+    color: var(--muted);
+    background: rgba(255,255,255,0.05);
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+  }
+
+  .project-arrow {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    transition: background 0.2s, color 0.2s;
+    flex-shrink: 0;
+  }
+
+  .project-card:hover .project-arrow {
+    background: rgba(255,255,255,0.1);
+    color: var(--text);
+  }
+
+  /* SAAS CARD FEATURED */
+  .project-card.featured {
+    grid-column: span 2;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+
+  .project-card.featured .project-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* SERVICES */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .service-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+  }
+
+  .service-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .service-title {
+    font-family: 'Corbel', 'Candara', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .service-desc {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .service-price {
+    margin-top: 1.5rem;
+    font-family: 'Corbel', 'Candara', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: var(--gradient3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* CONTACT */
+  .contact-wrapper {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: var(--accent1);
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.05;
+  }
+
+  .contact-title {
+    font-family: 'Corbel', 'Candara', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+
+  .contact-desc {
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .contact-item-icon {
+    width: 36px; height: 36px;
+    background: rgba(108,99,255,0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  /* FORM */
+  .form-group {
+    margin-bottom: 1.2rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: rgba(108,99,255,0.5);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .form-submit {
+    width: 100%;
+    background: var(--gradient1);
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 12px;
+    font-family: 'Corbel', 'Candara', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .form-submit:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  footer span {
+    background: var(--gradient1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.hidden {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .project-card.featured {
+      grid-column: span 1;
+      flex-direction: column;
+    }
+    .contact-wrapper {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 2rem;
+    }
+    .nav-links { display: none; }
+    .stats { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Bâdir Web</div>
+  <ul class="nav-links">
+    <li><a href="#projets">Projets</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="badge-dot"></div>
+      Disponible pour de nouveaux projets
+    </div>
+    <h1>
+      Je construis des<br>
+      <span class="highlight">outils digitaux</span><br>
+      qui <span class="highlight2">génèrent</span> des résultats.
+    </h1>
+    <p class="hero-desc">
+      Développeur indépendant basé au Havre. Je crée des sites web, applications SaaS et chatbots IA pour les entrepreneurs et commerçants locaux.
+    </p>
+    <div class="hero-ctas">
+      <a href="#projets" class="btn-primary">
+        Voir mes projets
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#contact" class="btn-secondary">
+        Me contacter
+      </a>
+    </div>
+    <div class="stats">
+      <div class="stat-item">
+        <div class="stat-number">5+</div>
+        <div class="stat-label">Projets livrés</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">2</div>
+        <div class="stat-label">SaaS en production</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Autodidacte</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJETS -->
+<section id="projets">
+  <div class="reveal">
+    <div class="section-label">Réalisations</div>
+    <h2 class="section-title">Ce que j'ai construit</h2>
+    <p class="section-sub">Des projets réels, en production, utilisés par de vraies personnes.</p>
+  </div>
+
+  <div class="projects-grid reveal">
+
+    <!-- CallRDV IA - Featured -->
+    <a href="https://callrdv.com" target="_blank" class="project-card purple featured">
+      <div class="project-icon purple">📞</div>
+      <div class="project-body">
+        <div><span class="project-tag purple">SaaS • En production</span></div>
+        <div class="project-title">CallRDV IA</div>
+        <p class="project-desc">Application SaaS de gestion de rendez-vous post-appel avec IA. Formulaires dynamiques par catégorie, recherche client intelligente, notifications push, dark mode, paiement Stripe, Google OAuth et conformité RGPD.</p>
+        <div class="project-footer">
+          <div class="project-techs">
+            <span class="tech-pill">React 18</span>
+            <span class="tech-pill">Supabase</span>
+            <span class="tech-pill">Stripe</span>
+            <span class="tech-pill">Resend</span>
+          </div>
+          <div class="project-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </div>
+        </div>
+      </div>
+    </a>
+
+    <!-- Bâdir -->
+    <a href="https://badir.netlify.app" target="_blank" class="project-card green">
+      <div class="project-icon green">📚</div>
+      <span class="project-tag green">App • En production</span>
+      <div class="project-title">Bâdir بادر</div>
+      <p class="project-desc">Plateforme combinant gestion de tâches personnelles et suivi pédagogique enseignant-élève. Rappels WhatsApp/email, authentification PIN, suivi de présence et vue calendrier.</p>
+      <div class="project-footer">
+        <div class="project-techs">
+          <span class="tech-pill">React</span>
+          <span class="tech-pill">EmailJS</span>
+          <span class="tech-pill">Netlify</span>
+        </div>
+        <div class="project-arrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <!-- Location voiture -->
+    <a href="https://location-auto-six.vercel.app/" target="_blank" class="project-card orange">
+      <div class="project-icon orange">🚗</div>
+      <span class="project-tag orange">Démo • Location auto</span>
+      <div class="project-title">Location de véhicules</div>
+      <p class="project-desc">Site vitrine pour agence de location avec chatbot IA intégré, système de réservation en ligne et catalogue véhicules interactif.</p>
+      <div class="project-footer">
+        <div class="project-techs">
+          <span class="tech-pill">React</span>
+          <span class="tech-pill">Chatbot IA</span>
+          <span class="tech-pill">Vercel</span>
+        </div>
+        <div class="project-arrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <!-- Coiffeur -->
+    <a href="https://coiffeur-rdv.vercel.app" target="_blank" class="project-card red">
+      <div class="project-icon red">✂️</div>
+      <span class="project-tag red">Démo • Salon de coiffure</span>
+      <div class="project-title">Coiffeur RDV</div>
+      <p class="project-desc">Site de réservation en ligne pour salon de coiffure avec système de prise de rendez-vous intégré, gestion des disponibilités et confirmation automatique.</p>
+      <div class="project-footer">
+        <div class="project-techs">
+          <span class="tech-pill">React</span>
+          <span class="tech-pill">Booking</span>
+          <span class="tech-pill">Vercel</span>
+        </div>
+        <div class="project-arrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <!-- Restaurant -->
+    <a href="https://chatbot-demo-restaurant.vercel.app" target="_blank" class="project-card blue">
+      <div class="project-icon blue">🍽️</div>
+      <span class="project-tag blue">Démo • Restaurant</span>
+      <div class="project-title">Restaurant Chatbot</div>
+      <p class="project-desc">Site restaurant avec chatbot IA intégré capable de répondre aux questions clients, présenter le menu, prendre des réservations et gérer les commandes en temps réel.</p>
+      <div class="project-footer">
+        <div class="project-techs">
+          <span class="tech-pill">React</span>
+          <span class="tech-pill">IA</span>
+          <span class="tech-pill">Vercel</span>
+        </div>
+        <div class="project-arrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" style="background: var(--surface); max-width: 100%; padding: 6rem 2rem;">
+  <div style="max-width: 1100px; margin: 0 auto;">
+    <div class="reveal">
+      <div class="section-label">Ce que je propose</div>
+      <h2 class="section-title">Services</h2>
+      <p class="section-sub">Des solutions clés en main pour les commerçants et entrepreneurs.</p>
+    </div>
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="service-icon">🌐</div>
+        <div class="service-title">Site vitrine professionnel</div>
+        <p class="service-desc">Site web moderne, responsive, rapide et optimisé SEO. Livré avec hébergement et nom de domaine configurés.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📅</div>
+        <div class="service-title">Système de réservation</div>
+        <p class="service-desc">Intégration d'un système de prise de rendez-vous en ligne directement dans votre site. Confirmations automatiques par email.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🤖</div>
+        <div class="service-title">Chatbot IA personnalisé</div>
+        <p class="service-desc">Assistant virtuel intelligent entraîné sur votre activité. Répond aux questions clients 24h/24, 7j/7 à votre place.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">⚡</div>
+        <div class="service-title">Tout-en-un</div>
+        <p class="service-desc">Site + réservation + chatbot IA. Une seule formule, tout compris, livré clé en main. La solution complète pour votre activité.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="reveal">
+    <div class="section-label">Travaillons ensemble</div>
+    <h2 class="section-title">Vous avez un projet ?</h2>
+    <p class="section-sub">Décrivez-moi votre activité, je vous réponds rapidement.</p>
+  </div>
+
+  <div class="contact-wrapper reveal">
+    <div>
+      <h3 class="contact-title">Parlons de votre projet</h3>
+      <p class="contact-desc">Que vous soyez coiffeur, restaurateur, gérant d'une agence ou tout autre commerçant — si vous avez besoin d'une présence digitale efficace, je peux vous aider.</p>
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          Le Havre, Normandie
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">✉️</div>
+          <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="eb8884859f8a889fab9d849f998ec68e868a8287c5888486">[email&#160;protected]</a>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">⚡</div>
+          Réponse sous 24h
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">🕐</div>
+          Livraison rapide garantie
+        </div>
+      </div>
+    </div>
+    <div>
+      <form onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label>Votre nom</label>
+          <input type="text" name="from_name" placeholder="Jean Dupont" required>
+        </div>
+        <div class="form-group">
+          <label>Votre email</label>
+          <input type="email" name="from_email" placeholder="jean@exemple.com" required>
+        </div>
+        <div class="form-group">
+          <label>Votre activité</label>
+          <input type="text" name="activity" placeholder="Salon de coiffure, restaurant...">
+        </div>
+        <div class="form-group">
+          <label>Votre message</label>
+          <textarea name="message" placeholder="Décrivez votre projet en quelques lignes..." required></textarea>
+        </div>
+        <button type="submit" class="form-submit">Envoyer le message →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <span>Bâdir Web</span> — Développeur Web & Solutions Digitales · Le Havre</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+  emailjs.init('VT8tx4Y8-fmRWhbUQ');
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Form submit avec EmailJS
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = 'Envoi en cours...';
+    btn.disabled = true;
+
+    emailjs.sendForm('service_fdsu32q', 'template_1l9lasv', e.target)
+      .then(() => {
+        btn.textContent = '✓ Message envoyé !';
+        btn.style.background = 'linear-gradient(135deg, #43e97b, #38f9d7)';
+        e.target.reset();
+        setTimeout(() => {
+          btn.textContent = 'Envoyer le message →';
+          btn.style.background = '';
+          btn.disabled = false;
+        }, 3000);
+      })
+      .catch((error) => {
+        btn.textContent = '✗ Erreur, réessayez';
+        btn.style.background = 'linear-gradient(135deg, #ff6b6b, #ff8e53)';
+        btn.disabled = false;
+        console.error('EmailJS error:', error);
+        setTimeout(() => {
+          btn.textContent = 'Envoyer le message →';
+          btn.style.background = '';
+        }, 3000);
+      });
+  }
+</script>
